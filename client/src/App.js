@@ -1,17 +1,24 @@
 import React, { useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
-import { cpp } from "@codemirror/lang-cpp"; // use cpp() instead of c()
-
+import { cpp } from "@codemirror/lang-cpp";
 import axios from "axios";
+import Header from "./header";
+import "./App.css";
 
 export default function App() {
-  const [code, setCode] = useState(`#include <stdio.h>\n\nint main() {\n  printf("Hello World");\n  return 0;\n}`);
+  const [code, setCode] = useState(`#include <stdio.h>
+
+int main() {
+  printf("Hello World");
+  return 0;
+}`);
   const [output, setOutput] = useState("");
   const [darkMode, setDarkMode] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     setLoading(true);
+    setOutput("");
     try {
       const res = await axios.post("http://localhost:5000/api/compile", { code });
       setOutput(res.data.output);
@@ -21,26 +28,35 @@ export default function App() {
     setLoading(false);
   };
 
+  const toggleDarkMode = () => setDarkMode((prev) => !prev);
+
   return (
-    <div style={{ padding: 20, backgroundColor: darkMode ? "#1e1e1e" : "#fff", minHeight: "100vh", color: darkMode ? "#fff" : "#000" }}>
-      <button onClick={() => setDarkMode(!darkMode)} style={{ marginBottom: 15 }}>
-        {darkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-      </button>
+    <div className={`app-container ${darkMode ? "dark" : "light"}`}>
+      <Header darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
 
-      <CodeMirror
-        value={code}
-        height="200px"
-        theme={darkMode ? "dark" : "light"}
-        extensions={[cpp()]}
-        onChange={(value) => setCode(value)}
-      />
+      <main className="main-content">
+        <CodeMirror
+          value={code}
+          height="300px"
+          theme={darkMode ? "dark" : "light"}
+          extensions={[cpp()]}
+          onChange={setCode}
+          className="code-editor"
+        />
 
-      <button onClick={handleSubmit} disabled={loading} style={{ marginTop: 20 }}>
-        {loading ? "Compiling..." : "Compile & Run"}
-      </button>
+        <button
+          onClick={handleSubmit}
+          disabled={loading}
+          className={`compile-btn ${loading ? "disabled" : ""}`}
+        >
+          {loading ? "Compiling..." : "Compile & Run"}
+        </button>
 
-      <h3>Output:</h3>
-      <pre style={{ backgroundColor: darkMode ? "#333" : "#eee", padding: 10, minHeight: 100 }}>{output}</pre>
+        <h3>Output:</h3>
+        <pre className="output-box" aria-live="polite">
+          {output}
+        </pre>
+      </main>
     </div>
   );
 }

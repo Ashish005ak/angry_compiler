@@ -1,38 +1,132 @@
-.App {
-  text-align: center;
-}
+/* App.css */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app-container.light {
+  background-color: #fff;
+  color: #000;
   min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app-container.dark {
+  background-color: #1e1e1e;
+  color: #fff;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Header styles */
+.header {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.header-light {
+  background-color: #f0f0f0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  color: #000;
+}
+
+.header-dark {
+  background-color: #272727;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.9);
+  color: #fff;
+}
+
+.logo {
+  font-size: 28px;
+  margin-right: 12px;
+  user-select: none;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  user-select: none;
+}
+
+/* Dark mode toggle button */
+.toggle-btn {
+  margin-left: auto;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-btn-light {
+  background-color: #ddd;
+  color: #000;
+}
+
+.toggle-btn-dark {
+  background-color: #444;
+  color: #fff;
+}
+
+/* Main content container */
+.main-content {
+  padding: 20px;
+  max-width: 900px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+}
+
+/* CodeMirror editor */
+.code-editor {
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  font-family: "source-code-pro", monospace;
+  /* Note: You can add more customizations here */
+}
+
+.app-container.dark .code-editor {
+  border-color: #444;
+}
+
+/* Compile button */
+.compile-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #28a745;
   color: white;
+  font-weight: bold;
+  align-self: flex-start;
+  transition: background-color 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.compile-btn.disabled {
+  background-color: #999;
+  cursor: not-allowed;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Output box */
+.output-box {
+  background-color: #eee;
+  padding: 15px;
+  min-height: 150px;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  color: #222;
+  font-family: "source-code-pro", monospace;
+  font-size: 14px;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+.app-container.dark .output-box {
+  background-color: #333;
+  color: #ddd;
 }
